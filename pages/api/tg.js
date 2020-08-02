@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
-const User = require('../../models/User')
 
 const TelegramBot = require('node-telegram-bot-api')
 const bot = new TelegramBot(process.env.BOT_TEST, { webHook: true })
+
+const User = require('../../models/User')
 
 module.exports = async (req, res) => {
     if (req.method == 'GET') {
