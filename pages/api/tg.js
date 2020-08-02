@@ -1,6 +1,4 @@
-require('dotenv').config()
 const mongoose = require('mongoose')
-
 const User = require('../../models/User')
 
 module.exports = async (req, res) => {
@@ -12,6 +10,7 @@ module.exports = async (req, res) => {
         })
     }
     else {
+        console.log(process.env)
         await mongoose.connect("mongodb+srv://" + process.env.MDB_USER + ":" + process.env.MDB_PASS + "@" + process.env.MDB_CLUSTER + "/" + process.env.MDB_ESED_DB, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
