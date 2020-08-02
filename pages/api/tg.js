@@ -10,18 +10,18 @@ module.exports = async (req, res) => {
         })
     }
     else {
-        console.log(process.env)
-        await mongoose.connect("mongodb+srv://" + process.env.MDB_USER + ":" + process.env.MDB_PASS + "@" + process.env.MDB_CLUSTER + "/" + process.env.MDB_ESED_DB, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        })
-        let user = await User.findOne({ tg: req.body.message.chat.id })
+        // await mongoose.connect("mongodb+srv://" + process.env.MDB_USER + ":" + process.env.MDB_PASS + "@" + process.env.MDB_CLUSTER + "/" + process.env.MDB_ESED_DB, {
+        //     useNewUrlParser: true,
+        //     useUnifiedTopology: true,
+        //     useCreateIndex: true
+        // })
+        // let user = await User.findOne({ tg: req.body.message.chat.id })
         res.json({
             "method": "sendMessage",
             "chat_id": req.body.message.chat.id,
             "reply_to_message_id": req.body.message.message_id,
-            "text": user
+            "text": req.body.message
+            //user
         })
     }
 }
