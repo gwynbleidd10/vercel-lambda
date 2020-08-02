@@ -1,25 +1,15 @@
 {
-  "name": "vercel-lambda",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "vercel-lamda",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "next --port 3000"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gwynbleidd10/vercel-lambda.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gwynbleidd10/vercel-lambda/issues"
-  },
-  "homepage": "https://github.com/gwynbleidd10/vercel-lambda#readme",
   "dependencies": {
-    "next": "^9.5.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "next": "9.5.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   }
 }

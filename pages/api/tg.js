@@ -3,6 +3,6 @@ module.exports = (req, res) => {
         "method": "sendMessage",
         "chat_id": req.body.message.chat.id,
         "reply_to_message_id": req.body.message.message_id,
-        "text": "Привет, Habr!"
+        "text": "Привет"
     })
 }
