@@ -56,7 +56,8 @@ module.exports = async (req, res) => {
                 break;
         }
         //console.log(data)
-        console.log(path.dirname(__filename))
+        console.log(__filename)
+        console.log(path.resolve(__filename))
         // console.log(path.dirname(__dirname)public/templates/${req.query.type}/${req.query.report}.docx)
         generateReport(data, `./files/change.docx`, async (doc) => {
             res.setHeader("Content-Disposition", setFilename(Lists.report[req.query.type][req.query.report].name));
