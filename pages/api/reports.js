@@ -56,7 +56,8 @@ module.exports = async (req, res) => {
                 break;
         }
         //console.log(data)
-        generateReport(data, `/templates/${req.query.type}/${req.query.report}.docx`, async (doc) => {
+        console.log(`../../public/templates/${req.query.type}/${req.query.report}.docx`)
+        generateReport(data, 'public/templates/esia/change.docx', async (doc) => {
             res.setHeader("Content-Disposition", setFilename(Lists.report[req.query.type][req.query.report].name));
             res.send(await doc)
         })
