@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
                 break;
         }
         //console.log(data)
-        console.log(__filename)
+        console.log(path.dirname(process.mainModule.filename))
         console.log(path.resolve(__dirname))
         // console.log(path.dirname(__dirname)public/templates/${req.query.type}/${req.query.report}.docx)
         generateReport(data, `./files/change.docx`, async (doc) => {
