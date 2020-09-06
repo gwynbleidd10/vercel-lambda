@@ -55,11 +55,8 @@ module.exports = async (req, res) => {
                 data.employee = (formData.employee) ? `${Lists.employee[formData.employee].surname} ${Lists.employee[formData.employee].name} ${Lists.employee[formData.employee].patronymic}, ${Lists.employee[formData.employee].post}, ${Lists.employee[formData.employee].phone}` : 'ОТВЕТСТВЕННЫЙ_СОТРУДНИК'
                 break;
         }
-        //console.log(data)
-        console.log(path.dirname(process.mainModule.filename))
-        console.log(path.resolve(__dirname))
-        // console.log(path.dirname(__dirname)public/templates/${req.query.type}/${req.query.report}.docx)
-        generateReport(data, `${path.dirname(process.mainModule.filename)}/public/templates/esia/change.docx`, async (doc) => {
+        // // console.log(path.dirname(__dirname)public/templates/${req.query.type}/${req.query.report}.docx)
+        generateReport(data, path.join(process.cwd(), `/public/templates/${req.query.type}/${req.query.report}.docx`), async (doc) => {
             res.setHeader("Content-Disposition", setFilename(Lists.report[req.query.type][req.query.report].name));
             res.send(await doc)
         })
