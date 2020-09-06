@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { Lists } from '../../data'
 
-export default function Sc() { 
+export default function Sc() {
     const [is, setIs] = useState('rsmev')
     const [type, setType] = useState('smev3')
     const [env, setEnv] = useState('prod')
@@ -61,12 +61,6 @@ export default function Sc() {
         return (
             <>
                 <Table size="sm">
-                    <thead></thead>
-                    <tbody>
-                        <tr>
-                            <td colSpan="2" align="center" className="font-weight-bold">Информация об участнике</td>
-                        </tr>
-                    </tbody>
                     <thead >
                         <tr>
                             <th>Полное наименование</th>
@@ -231,6 +225,9 @@ export default function Sc() {
         <>
             <Container style={{ borderRadius: '10px', background: '#fff', marginTop: '10px', padding: '10px' }}>
                 <Menu />
+            </Container>
+            <Container style={{ borderRadius: '10px', background: '#fff', marginTop: '10px', padding: '10px' }}>
+                <h3 align="center">Информация об участнике</h3>
             </Container>
             <Container style={{ borderRadius: '10px', background: '#fff', marginTop: '10px', padding: '10px' }}>
                 <MemberInfo />
