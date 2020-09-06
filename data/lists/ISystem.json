@@ -1,0 +1,526 @@
+{
+    "rsmev": {
+        "name": "РСМЭВ",
+        "member": "mi",
+        "esia": {
+            "shortname": "ЕИТП",
+            "url": "https://eitp.e-yakutia.ru",
+            "requestsmin": "10000",
+            "requestsmax": "30000",
+            "test": {
+                "code": "103001141",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "103001141",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            },
+            "scope": [
+                {
+                    "name": "Fullname"
+                },
+                {
+                    "name": "Birthdate"
+                },
+                {
+                    "name": "Gender"
+                },
+                {
+                    "name": "Snils"
+                },
+                {
+                    "name": "Inn"
+                },
+                {
+                    "name": "Id_doc"
+                },
+                {
+                    "name": "Birthplace"
+                },
+                {
+                    "name": "Email"
+                },
+                {
+                    "name": "Mobile"
+                },
+                {
+                    "name": "Contacts"
+                },
+                {
+                    "name": "usr_org"
+                },
+                {
+                    "name": "org_shortname"
+                },
+                {
+                    "name": "org_fullname"
+                },
+                {
+                    "name": "org_type"
+                },
+                {
+                    "name": "org_ogrn"
+                },
+                {
+                    "name": "org_inn"
+                },
+                {
+                    "name": "org_leg"
+                },
+                {
+                    "name": "org_kpp"
+                },
+                {
+                    "name": "org_agencyterrange"
+                },
+                {
+                    "name": "org_agencytype"
+                },
+                {
+                    "name": "org_oktmo"
+                },
+                {
+                    "name": "org_ctts"
+                },
+                {
+                    "name": "org_addrs"
+                },
+                {
+                    "name": "org_grps"
+                },
+                {
+                    "name": "org_emps"
+                },
+                {
+                    "name": "org_brhs"
+                },
+                {
+                    "name": "org_brhs_ctts"
+                },
+                {
+                    "name": "org_brhs_addrs"
+                },
+                {
+                    "name": "org_rcs"
+                },
+                {
+                    "name": "org_stms"
+                },
+                {
+                    "name": "org_invts"
+                },
+                {
+                    "name": "aac"
+                },
+                {
+                    "name": "http://lk.gosuslugi.ru/elk"
+                },
+                {
+                    "name": "http://sf.gosuslugi.ru/sf_api"
+                },
+                {
+                    "name": "http://sf.gosuslugi.ru/data"
+                }
+            ]
+        },
+        "smev2": {
+            "coordinator": "103001141",
+            "fullname": "Типовой комплекс межведомственного взаимодействия регионального уровня",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "103001",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "103001",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            }
+        },
+        "smev3": {
+            "fullname": "Типовой комплекс межведомственного взаимодействия регионального уровня",
+            "shortname": "ТКМВ-РУ",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "coordinator": "140101, 140101, 140101",
+            "trace": "98000000000",
+            "test": {
+                "code": "140101",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "140101",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            }
+        }
+    },
+    "eitp": {
+        "name": "ЕИТП",
+        "member": "mi",
+        "esia": {
+            "shortname": "ЕИТП",
+            "url": "https://eitp.e-yakutia.ru",
+            "requestsmin": "10000",
+            "requestsmax": "30000",
+            "test": {
+                "code": "103001141",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "103001141",
+                "cert": "5da8630028ac049440d5d7f2fae7d4b6",
+                "date": "31.08.2021"
+            },
+            "scope": [
+                {
+                    "name": "Fullname"
+                },
+                {
+                    "name": "Birthdate"
+                },
+                {
+                    "name": "Gender"
+                },
+                {
+                    "name": "Snils"
+                },
+                {
+                    "name": "Inn"
+                },
+                {
+                    "name": "Id_doc"
+                },
+                {
+                    "name": "Birthplace"
+                },
+                {
+                    "name": "Email"
+                },
+                {
+                    "name": "Mobile"
+                },
+                {
+                    "name": "Contacts"
+                },
+                {
+                    "name": "usr_org"
+                },
+                {
+                    "name": "org_shortname"
+                },
+                {
+                    "name": "org_fullname"
+                },
+                {
+                    "name": "org_type"
+                },
+                {
+                    "name": "org_ogrn"
+                },
+                {
+                    "name": "org_inn"
+                },
+                {
+                    "name": "org_leg"
+                },
+                {
+                    "name": "org_kpp"
+                },
+                {
+                    "name": "org_agencyterrange"
+                },
+                {
+                    "name": "org_agencytype"
+                },
+                {
+                    "name": "org_oktmo"
+                },
+                {
+                    "name": "org_ctts"
+                },
+                {
+                    "name": "org_addrs"
+                },
+                {
+                    "name": "org_grps"
+                },
+                {
+                    "name": "org_emps"
+                },
+                {
+                    "name": "org_brhs"
+                },
+                {
+                    "name": "org_brhs_ctts"
+                },
+                {
+                    "name": "org_brhs_addrs"
+                },
+                {
+                    "name": "org_rcs"
+                },
+                {
+                    "name": "org_stms"
+                },
+                {
+                    "name": "org_invts"
+                },
+                {
+                    "name": "aac"
+                },
+                {
+                    "name": "http://lk.gosuslugi.ru/elk"
+                },
+                {
+                    "name": "http://sf.gosuslugi.ru/sf_api"
+                },
+                {
+                    "name": "http://sf.gosuslugi.ru/data"
+                }
+            ]
+        },
+        "smev2": {
+            "coordinator": "-",
+            "fullname": "-",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "------",
+                "cert": "--------------------------------",
+                "date": "--.--.--"
+            },
+            "prod": {
+                "code": "------",
+                "cert": "--------------------------------",
+                "date": "--.--.--"
+            }
+        },
+        "smev3": {
+            "fullname": "Региональный портал государственных услуг Республики Саха (Якутии)",
+            "shortname": "РПГУ Республики Саха (Якутии)",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "140104",
+                "cert": "637c1d00e5aa2bb14474ba87a00ae306",
+                "date": "13.10.2020"
+            },
+            "prod": {
+                "code": "140104",
+                "cert": "637c1d00e5aa2bb14474ba87a00ae306",
+                "date": "13.10.2020"
+            }
+        }
+    },
+    "rpgu": {
+        "name": "РПГУ",
+        "member": "mi",
+        "esia": {
+            "shortname": "РПГУ",
+            "url": "https://e-yakutia.ru/main.htm",
+            "requestsmin": "10",
+            "requestsmax": "2000",
+            "test": {
+                "code": "PPUY01141",
+                "cert": "42af640028ac63bc4abb0cd8aaab6971",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "PPUY01141",
+                "cert": "42af640028ac63bc4abb0cd8aaab6971",
+                "date": "31.08.2021"
+            },
+            "scope": [
+                {
+                    "name": "fullname"
+                },
+                {
+                    "name": "birthdate"
+                },
+                {
+                    "name": "gender"
+                },
+                {
+                    "name": "snils"
+                },
+                {
+                    "name": "inn"
+                },
+                {
+                    "name": "birthplace"
+                },
+                {
+                    "name": "email"
+                },
+                {
+                    "name": "mobile"
+                },
+                {
+                    "name": "contacts"
+                },
+                {
+                    "name": "usr_org"
+                },
+                {
+                    "name": "id_doc"
+                },
+                {
+                    "name": "medical_doc"
+                },
+                {
+                    "name": "military_doc"
+                },
+                {
+                    "name": "foreign_passport_doc"
+                },
+                {
+                    "name": "drivers_licence_doc"
+                },
+                {
+                    "name": "birth_cert_doc"
+                },
+                {
+                    "name": "residence_doc"
+                },
+                {
+                    "name": "temporary_residence_doc"
+                },
+                {
+                    "name": "vehicles"
+                },
+                {
+                    "name": "kid_fullname"
+                },
+                {
+                    "name": "kid_birthdate"
+                },
+                {
+                    "name": "kid_gender"
+                },
+                {
+                    "name": "kid_snils"
+                },
+                {
+                    "name": "kid_inn"
+                },
+                {
+                    "name": "kid_birth_cert_doc"
+                },
+                {
+                    "name": "kid_medical_doc"
+                },
+                {
+                    "name": "org_shortname"
+                },
+                {
+                    "name": "org_fullname"
+                },
+                {
+                    "name": "org_type"
+                },
+                {
+                    "name": "org_ogrn"
+                },
+                {
+                    "name": "org_inn"
+                },
+                {
+                    "name": "org_leg"
+                },
+                {
+                    "name": "org_kpp"
+                },
+                {
+                    "name": "org_agencyterrange"
+                },
+                {
+                    "name": "org_agencytype"
+                },
+                {
+                    "name": "org_oktmo"
+                },
+                {
+                    "name": "org_ctts"
+                },
+                {
+                    "name": "org_addrs"
+                },
+                {
+                    "name": "org_vhls"
+                },
+                {
+                    "name": "org_grps"
+                },
+                {
+                    "name": "org_emps"
+                },
+                {
+                    "name": "org_brhs"
+                },
+                {
+                    "name": "org_brhs_ctts"
+                },
+                {
+                    "name": "org_brhs_addrs"
+                },
+                {
+                    "name": "org_rcs"
+                },
+                {
+                    "name": "org_stms"
+                },
+                {
+                    "name": "org_invts"
+                },
+                {
+                    "name": "http://lk.gosuslugi.ru/lk_api"
+                },
+                {
+                    "name": "http://sf.gosuslugi.ru/sf_api"
+                },
+                {
+                    "name": "http://sf.gosuslugi.ru/data"
+                }
+            ]
+        },
+        "smev2": {
+            "fullname": "Портал поставщиков услуг",
+            "coordinator": "103002141",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "103002",
+                "cert": "42af640028ac63bc4abb0cd8aaab6971",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "103002",
+                "cert": "42af640028ac63bc4abb0cd8aaab6971",
+                "date": "31.08.2021"
+            }
+        },
+        "smev3": {
+            "fullname": "Портал государственных и муниципальных услуг Республики Саха (Якутия)",
+            "shortname": "РПГУ",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "140103_3T",
+                "cert": "42af640028ac63bc4abb0cd8aaab6971",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "140103_3S",
+                "cert": "42af640028ac63bc4abb0cd8aaab6971",
+                "date": "31.08.2021"
+            }
+        }
+    }
+}

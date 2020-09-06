@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Bootstrap CSS */
+
+.dropdown-item:hover {
+  background: #007bff!important;
+  color: #fff!important;
+}
