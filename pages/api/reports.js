@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
         console.log(path.dirname(process.mainModule.filename))
         console.log(path.resolve(__dirname))
         // console.log(path.dirname(__dirname)public/templates/${req.query.type}/${req.query.report}.docx)
-        generateReport(data, `./files/change.docx`, async (doc) => {
+        generateReport(data, `${path.dirname(process.mainModule.filename)}/public/templates/esia/change.docx`, async (doc) => {
             res.setHeader("Content-Disposition", setFilename(Lists.report[req.query.type][req.query.report].name));
             res.send(await doc)
         })
