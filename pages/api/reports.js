@@ -28,10 +28,11 @@ module.exports = async (req, res) => {
             requestsMax: (formData.requestsmax) ? formData.requestsmax : (Lists.isystem[req.query.is][req.query.type].requestsmax) ? Lists.isystem[req.query.is][req.query.type].requestsmax : 'МАКСИМАЛЬНОЕ_КОЛВО_ЗАПРОСОВ',
             signerPost: (formData.signer) ? Lists.signer[formData.signer].post : 'УПОЛНОМОЧЕННОЕ_ЛИЦО'
         }
-        switch (req.query.type) {
-            case 'esia':
+        switch (req.query.type) {            
+            case 'esia':         
                 data.esiaCode = (Lists.isystem[req.query.is].esia[req.query.env].code) ? Lists.isystem[req.query.is].esia[req.query.env].code : 'МНЕМОНИКА_ЕСИА'
                 data.url = (formData.url) ? formData.url : (Lists.isystem[req.query.is].esia.url) ? Lists.isystem[req.query.is].esia.url : 'URL_ГЛАВНОЙ_СТРАНИЦЫ'
+                data.cert = req.query.is
                 data.scope = (Lists.isystem[req.query.is].esia.scope) ? Lists.isystem[req.query.is].esia.scope : 'СКОУПЫ'
                 data.reason = (formData.reason) ? formData.reason : 'ПРИЧИНА'
                 break;

@@ -522,5 +522,107 @@
                 "date": "31.08.2021"
             }
         }
+    },
+    "pou": {
+        "name": "ПОУ",
+        "member": "mi",
+        "esia": {
+            "shortname": "Портал образовательных услуг",
+            "url": "edu.e-yakutia.ru",
+            "requestsmin": "10000",
+            "requestsmax": "30000",
+            "test": {
+                "code": "14EUO2018",
+                "cert": "5c2a640028ac14974ffaab85be086518",
+                "date": "31.08.2021"
+            },
+            "prod": {
+                "code": "14EUO2018",
+                "cert": "5c2a640028ac14974ffaab85be086518",
+                "date": "31.08.2021"
+            },
+            "scope": [
+                {
+                    "name": "fullname"
+                },
+                {
+                    "name": "birthdate"
+                },
+                {
+                    "name": "gender"
+                },
+                {
+                    "name": "snils"
+                },
+                {
+                    "name": "id_doc"
+                },
+                {
+                    "name": "birthplace"
+                },
+                {
+                    "name": "residence_doc"
+                },
+                {
+                    "name": "temporary_residence_doc"
+                },
+                {
+                    "name": "email"
+                },
+                {
+                    "name": "mobile"
+                },
+                {
+                    "name": "kid_fullname"
+                },
+                {
+                    "name": "kid_birthdate"
+                },
+                {
+                    "name": "kid_gender"
+                },
+                {
+                    "name": "kid_snils"
+                },
+                {
+                    "name": "kid_birth_cert_doc"
+                },
+                {
+                    "name": "contacts"
+                }
+            ]
+        },
+        "smev2": {
+            "fullname": "",
+            "coordinator": "",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "",
+                "cert": "",
+                "date": ""
+            },
+            "prod": {
+                "code": "",
+                "cert": "",
+                "date": ""
+            }
+        },
+        "smev3": {
+            "fullname": "",
+            "shortname": "",
+            "requestsmin": "1000",
+            "requestsmax": "10000",
+            "test": {
+                "code": "",
+                "cert": "",
+                "date": ""
+            },
+            "prod": {
+                "code": "",
+                "cert": "",
+                "date": ""
+            }
+        }
     }
 }
