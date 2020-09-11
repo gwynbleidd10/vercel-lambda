@@ -594,7 +594,7 @@
         },
         "smev2": {
             "fullname": "Портал образовательных Услуг",
-            "coordinator": "103002141",
+            "coordinator": "103004141",
             "requestsmin": "1000",
             "requestsmax": "10000",
             "test": {
