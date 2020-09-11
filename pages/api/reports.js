@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
             isFullName: (Lists.isystem[req.query.is][req.query.type].fullname) ? Lists.isystem[req.query.is][req.query.type].fullname : 'ПОЛНОЕ_НАИМЕНОВАНИЕ_ИС',
             isShortName: (Lists.isystem[req.query.is][req.query.type].shortname) ? Lists.isystem[req.query.is][req.query.type].shortname : 'КРАТКОЕ_НАИМЕНОВАНИЕ_ИС',
             isCode: (Lists.isystem[req.query.is][req.query.type][req.query.env].code) ? Lists.isystem[req.query.is][req.query.type][req.query.env].code : 'МНЕМОНИКА',
+            coordinator: (formData.coordinator) ? formData.coordinator : (Lists.isystem[req.query.is][req.query.type].coordinator) ? Lists.isystem[req.query.is][req.query.type].coordinator : "МНЕМОНИКИ",
             employeeSurname: (formData.employee) ? Lists.employee[formData.employee].surname : 'ФАМИЛИЯ',
             employeeSurname2: (formData.employee2) ? Lists.employee[formData.employee2].surname : 'ФАМИЛИЯ2',
             employeeName: (formData.employee) ? Lists.employee[formData.employee].name : 'ИМЯ',
@@ -49,12 +50,15 @@ module.exports = async (req, res) => {
                 data.reason = (formData.reason) ? formData.reason : 'ПРИЧИНА'
                 break;
             case 'smev2':
-
+                data.certSn = (formData.certsn) ? formData.certsn : "СЕРИЙНЫЙ_НОМЕР"
+                data.certStartDate = (formData.certstartdate) ? formData.certstartdate : "ДАТА_НАЧАЛА"
+                data.certEndDate = (formData.certenddate) ? formData.certenddate : "ДАТА_ОКОНЧАНИЯ"
+                data.certUc = (formData.certuc) ? formData.certuc : "УЦ"
+                data.certCity = (formData.certcity) ? formData.certcity : "ГОРОД"
                 break;
             case 'smev3':
                 data.member = `${Lists.member[Lists.isystem[req.query.is].member].fullname}, ${Lists.member[Lists.isystem[req.query.is].member].code}`
                 data.is = (Lists.isystem[req.query.is][req.query.type].fullname) ? `${Lists.isystem[req.query.is][req.query.type].fullname}, ${Lists.isystem[req.query.is][req.query.type][req.query.env].code}` : 'НАИМЕНОВАНИЕ_ИС'
-                data.coordinator = (formData.coordinator) ? formData.coordinator : (Lists.isystem[req.query.is][req.query.type].coordinator) ? Lists.isystem[req.query.is][req.query.type].coordinator : "МНЕМОНИКИ"
                 data.trace = (formData.trace) ? formData.trace : (Lists.isystem[req.query.is][req.query.type].trace) ? Lists.isystem[req.query.is][req.query.type].trace : 'МАРШРУТИЗАЦИЯ'
                 data.date = (formData.date) ? formData.date : 'ДД.ММ.ГГГГ ЧЧ:ММ'
                 data.mid = (formData.mid) ? formData.mid : 'MESSAGE_ID'

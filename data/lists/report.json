@@ -41,7 +41,51 @@
         }
     },
     "smev2": {
-        "test": "test"
+        "change_cert": {
+            "name": "Заявка для регистрации в СМЭВ 2 (замена ЭП-ОВ)",
+            "fields": {
+                "0": {
+                    "employee": {
+                        "name": "Ответственный сотрудник 1",
+                        "as": "select",
+                        "list": "employee"
+                    },
+                    "employee2": {
+                        "name": "Ответственный сотрудник 2",
+                        "as": "select",
+                        "list": "employee"
+                    }
+                },
+                "1": {
+                    "certsn": {
+                        "name": "Серийный номер",
+                        "placeholder": "Серийный номер"
+                    }
+                },
+                "2": {
+                    "certstartdate": {
+                        "name": "Дата начала",
+                        "placeholder": "дд.мм.гггг чч:мм"
+                    },
+                    "certenddate": {
+                        "name": "Дата окончания",
+                        "placeholder": "дд.мм.гггг чч:мм"
+                    }
+                },
+                "3": {
+                    "certuc": {
+                        "name": "Удостоверяющий центр",
+                        "placeholder": "УЦ"
+                    }
+                },
+                "4": {
+                    "certcity": {
+                        "name": "Город",
+                        "placeholder": "Город"
+                    }
+                }
+            }
+        }
     },
     "smev3": {
         "consumer": {

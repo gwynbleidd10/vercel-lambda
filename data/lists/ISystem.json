@@ -593,17 +593,17 @@
             ]
         },
         "smev2": {
-            "fullname": "",
-            "coordinator": "",
+            "fullname": "Портал образовательных Услуг",
+            "coordinator": "103002141",
             "requestsmin": "1000",
             "requestsmax": "10000",
             "test": {
-                "code": "",
+                "code": "103004",
                 "cert": "5c2a640028ac14974ffaab85be086518",
                 "date": "31.08.2021"
             },
             "prod": {
-                "code": "",
+                "code": "103004",
                 "cert": "5c2a640028ac14974ffaab85be086518",
                 "date": "31.08.2021"
             }
