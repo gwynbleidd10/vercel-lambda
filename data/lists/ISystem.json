@@ -599,29 +599,29 @@
             "requestsmax": "10000",
             "test": {
                 "code": "",
-                "cert": "",
-                "date": ""
+                "cert": "5c2a640028ac14974ffaab85be086518",
+                "date": "31.08.2021"
             },
             "prod": {
                 "code": "",
-                "cert": "",
-                "date": ""
+                "cert": "5c2a640028ac14974ffaab85be086518",
+                "date": "31.08.2021"
             }
         },
         "smev3": {
-            "fullname": "",
-            "shortname": "",
+            "fullname": "Портал образовательных Услуг",
+            "shortname": "ПОУ",
             "requestsmin": "1000",
             "requestsmax": "10000",
             "test": {
-                "code": "",
-                "cert": "",
-                "date": ""
+                "code": "140002",
+                "cert": "5c2a640028ac14974ffaab85be086518",
+                "date": "31.08.2021"
             },
             "prod": {
-                "code": "",
-                "cert": "",
-                "date": ""
+                "code": "140002",
+                "cert": "5c2a640028ac14974ffaab85be086518",
+                "date": "31.08.2021"
             }
         }
     }
