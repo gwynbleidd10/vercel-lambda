@@ -19,10 +19,10 @@ module.exports = async (req, res) => {
                 res.json({ message: 'OK' })
             })
 
-        res.json({
-            status: 200,
-            message: 'WebHook for TG bot',
-        })
+        // res.json({
+        //     status: 200,
+        //     message: 'WebHook for TG bot',
+        // })
     }
     else {
         await mongoose.connect("mongodb+srv://" + process.env.MDB_USER + ":" + process.env.MDB_PASS + "@" + process.env.MDB_CLUSTER + "/" + process.env.MDB_ESED_DB, {
