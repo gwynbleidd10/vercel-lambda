@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 // const TelegramBot = require('node-telegram-bot-api')
 // const bot = new TelegramBot(process.env.BOT_TEST, { webHook: true })
 
-const User = require('../../models/User')
+const User = require('../../../models/User')
 
 let data = {
     "chat_id": "337277275",
