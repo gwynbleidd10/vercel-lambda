@@ -5,15 +5,17 @@ const mongoose = require('mongoose')
 
 const User = require('../../models/User')
 
+let data = {
+    chat_id: '337277275',
+    text: 'test'
+}
+
 module.exports = async (req, res) => {
     console.log(req)
     if (req.method == 'GET') {
         await fetch('https://api.telegram.org/bot1008172330:AAFR-qVaUe2S1_mcY8x1QxXY6i-AnUGe6DQ/sendMessage', {
             method: 'POST',
-            body: JSON.stringify({
-                chat_id: '337277275',
-                text: 'test'
-            })
+            body: data
         })
         res.json({
             status: 200,
