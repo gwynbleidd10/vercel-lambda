@@ -6,8 +6,8 @@ const mongoose = require('mongoose')
 const User = require('../../models/User')
 
 let data = {
-    chat_id: '337277275',
-    text: 'test'
+    "chat_id": "337277275",
+    "text": "test"
 }
 
 module.exports = async (req, res) => {
@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
         })
         res.json({
             status: 200,
-            message: r,
+            message: await r,
         })
     }
     else {
