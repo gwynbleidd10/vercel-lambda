@@ -13,13 +13,13 @@ let data = {
 module.exports = async (req, res) => {
     console.log(req)
     if (req.method == 'GET') {
-        await fetch('https://api.telegram.org/bot1008172330:AAFR-qVaUe2S1_mcY8x1QxXY6i-AnUGe6DQ/sendMessage', {
+        const r = await fetch('https://api.telegram.org/bot1008172330:AAFR-qVaUe2S1_mcY8x1QxXY6i-AnUGe6DQ/sendMessage', {
             method: 'POST',
-            body: JSON.parse(data)
+            body: JSON.stringify(data)
         })
         res.json({
             status: 200,
-            message: 'WebHook for TG bot',
+            message: r,
         })
     }
     else {
