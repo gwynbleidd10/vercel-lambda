@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     let url = `https://api.telegram.org/bot${token}/sendMessage`
 
     if (req.method == 'GET') {
-        fetch(url, {
+        await fetch(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
