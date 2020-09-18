@@ -19,15 +19,15 @@ module.exports = async (req, res) => {
         })
     }
     else {
-        // console.log(req.body)
-        // res.json({
-        //     "method": "sendMessage",
-        //     "chat_id": req.body.message.chat.id,
-        //     "reply_to_message_id": req.body.message.message_id,
-        //     "text": req.body.message
-        //     //user
-        // })
-        req.json(req.body)
+        console.log(req.body)
+        res.json({
+            "method": "sendMessage",
+            "chat_id": req.body.message.chat.id,
+            "reply_to_message_id": req.body.message.message_id,
+            "text": req.body.message
+            //user
+        })
+        // res.json(req.body)
         // bot.onText('message', (msg) => {
         //     //sendMessage(msg.from.id, start(msg.from.id))
         //     //checkId(msg.from.id)
