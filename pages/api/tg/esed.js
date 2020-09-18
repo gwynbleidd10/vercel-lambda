@@ -1,9 +1,8 @@
-// const mongoose = require('mongoose')
 
 // // const TelegramBot = require('node-telegram-bot-api')
 // // const bot = new TelegramBot(process.env.BOT_TEST, { webHook: true })
 
-
+const { cors } = require('../../../utils/cors')
 
 // let data = {
 //     "chat_id": "337277275",
@@ -11,7 +10,7 @@
 // }
 
 module.exports = async (req, res) => {
-    console.log(req)
+    await cors(req, res)
     if (req.method == 'GET') {
         res.json({
             status: 200,
@@ -24,7 +23,7 @@ module.exports = async (req, res) => {
             "method": "sendMessage",
             "chat_id": req.body.message.chat.id,
             "reply_to_message_id": req.body.message.message_id,
-            "text": req.body.message
+            "text": "Тест!"
             //user
         })
         // res.json(req.body)
