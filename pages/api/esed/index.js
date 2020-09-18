@@ -1,11 +1,17 @@
-const path = require('path')
+// import Cors from 'cors'
+// import initMiddleware from '../../../utils/cors'
 
-const User = require('../../../models/User')
-const Input = require('../../../models/Input')
-const Send = require('../../../models/Send')
-const Status = require('../../../models/Status')
+// const cors = initMiddleware(
+//     Cors({
+//         "origin": "*",
+//     })
+// )
+const { cors } = require('../../../utils/cors')
 
-module.exports = (req, res) => {
+const { fetchPost } = require('../../../utils/fetchPost')
+
+module.exports = async (req, res) => {
+    await cors(req, res)
     if (req.method == 'GET') {
         res.json({
             status: 200,
@@ -15,181 +21,287 @@ module.exports = (req, res) => {
     else {
         res.json({
             status: 200,
-            status: 'OK'
-        });
-        processing()
+            response: 'OK'
+        })
+        processing(req.body)
     }
 }
 
-async function processing() {
+//{rc, title, url, type, from, author, status, [comment]}
+async function processing(data) {
+    //console.log(data)
     let list = [], arr = [], stat = [], authors, user, send, tmp = ''
-    const input = await Input.create(data)
-    let status = {
-        type: '',
-        from: '',
-        dept: '',
-        to: 0,
-        send: '',
-        input: input._id
-    }
-    let str = `<a href=\"${data.url}\">${data.title}</a>\n================\n<a href="tg://user?id=${data.from}">`
-    const info = await User.findOne({ tg: data.from })
-    //let tmp = (info != null) ? info.name : "Неизвестный пользователь"
-    console.log(info.name, data.type, data.title)
-    status.from = info.name
-    status.dept = info.dept
-    str += info.name + "</a> "
-    status.type = (data.type == 'visa') ? 'Визирование' : (data.type == 'sign') ? 'Подпись' : (data.type == 'visa-send') ? 'Отправка на визирование' : (data.type == 'sign-send') ? 'Отправка на подпись' : (data.type == 'resolution') ? 'Поручение' : (data.type == 'answer') ? 'Отчёт' : 'Иное'
-    //Проверка типа сообщения
-    if (data.type == 'visa' || data.type == 'sign') {
-        //{title, url, type, from, author, status, [comment]}
-        str += ((data.type == 'visa') ? `<i>завизировал(а)` : `<i>подписал(а)`) + `</i>\n================\n<i>${data.status}</i>`
-        str += (data.comment != undefined) ? `\n================\n<i>Комментарий</i>: ${data.comment}` : ''
-        authors = data.author.split(',')
-        tmp = []
-        for (let i = 0; i < authors.length; i++) {
-            user = await User.findOne({ name: authors[i] })
-            if (user != null) {
-                status.send = await check(data, user, str)
-                if (status.send.status) {
-                    status.to = 1
-                }
-                tmp.push({ user: authors[i], send: status.send })
-            }
+
+    const info = (await fetchPost({
+        db: "esed",
+        model: "Esed_User",
+        method: "findOne",
+        data: {
+            tg: data.from
         }
-        send = await Send.create({ ...tmp })
-        status.send = send._id
-        await Status.create(status)
+    }, '/api/database/mongodb')).response
+    let status = {
+        rc: data.rc,
+        from: info.name,
+        dept: info.dept,
+        org: info.org,
+        type: (data.type == 'visa') ? 'Визирование' : (data.type == 'sign') ? 'Подпись' : (data.type == 'visa-send') ? 'Отправка на визирование' : (data.type == 'sign-send') ? 'Отправка на подпись' : (data.type == 'resolution') ? 'Поручение' : (data.type == 'reply') ? 'Отчёт' : 'Иное',
+        send: 0,
+        input_id: `ObjectId=${(await fetchPost({
+            model: "Esed_Input",
+            method: "create",
+            data
+        }, '/api/database/mongodb')).response._id}`,
+        send_id: [],
+        res_id: []
+    }
+
+    let str = `<a href=\"${data.url}\">${data.title}</a>\n================\n<a href="tg://user?id=${data.from}">${info.name}</a> `
+    console.log(`[${data.type}][${info.name}]${data.title}`)
+
+    if (data.type == 'visa' || data.type == 'sign') {
+        str += ((data.type == 'visa') ? `<i>завизировал(а)` : `<i>подписал(а)`) + `</i>\n================\n<i>${data.status}</i>${(data.comment != undefined) ? `\n================\n<i>Комментарий</i>: ${data.comment}` : ''}`
+        authors = (await fetchPost({ id: data.rc, from: info.name }, '/api/esed/prj/exec')).response
+        const sendStatus = await getTgFromSqlAndSend(authors, str)
+        status.send = sendStatus.send
+        status.send_id = sendStatus.send_id
+        await insertRc("Out", data.rc)
     }
     else if (data.type == 'visa-send' || data.type == 'sign-send') {
-        //{title, url, type, from, list}
-        if (info == null || !info.super) {  //Проверка на Марину
-            str += ((data.type == 'visa-send') ? `отправил(а) на <i>визу` : `отправил(а) на <i>подпись`) + `</i>\n================`
-            authors = data.list.split(',')
-            tmp = ''
-            for (let i = 0; i < authors.length; i++) {
-                user = await User.findOne({ name: authors[i] })
-                if (user != null) {
-                    tmp += '\n' + ((user.tg != '') ? `<a href="tg://user?id=${user.tg}">${authors[i]}</a>` : authors[i])
-                    list.push(user.tg)
-                }
-                else {
-                    tmp += '\n' + authors[i]
-                }
-            }
-            for (let i = 0; i < list.length; i++) {
-                user = await User.findOne({ tg: list[i] })
-                status.send = await check(data, user, str + tmp)
-                if (status.send.status) {
-                    status.to = 1
-                }
-                arr.push({ user: user.name, send: status.send })
-            }
-            send = await Send.create((list.length > 0) ? { ...arr } : { message: "Ни одного пользователя нет в справочнике" })
-            status.send = send._id
-            await Status.create(status)
-        }
+        //     //{title, url, type, from, list}
+        str += ((data.type == 'visa-send') ? `отправил(а) на <i>визу` : `отправил(а) на <i>подпись`) + `</i>\n================`
+        authors = data.list.split(',')
+        const sendStatus = (await getTgAndMsgAndSend(authors, str))
+        console.log("end", await sendStatus)
+        status.send = sendStatus.send
+        status.send_id = sendStatus.send_id
+        await insertRc("Out", data.rc)
     }
     else if (data.type == 'resolution') {
-        //{title, url, type, from, list {title, list, [date]}}
-        let ctrl = 0
+        //     //{title, url, type, from, list {title, list, [date]}}
         str += 'назначил(а) <i>поручение</i>\n================'
-        for (let i = 0; i < data.list.length; i++) {
-            status.res = data.list.length
-            if (data.list[i].control == "true") {
-                ctrl++
-                tmp = ''
-                tmp += '\nПоручение: <i>' + data.list[i].title + '</i>\n================\nСрок: <i>' + data.list[i].date + '</i>\n================'
-                authors = data.list[i].list.split(',')
-                list = []
-                for (let i = 0; i < authors.length; i++) {
-                    user = await User.findOne({ name: (authors[i][0] == ('(')) ? authors[i].substr(7, authors[i].length - 7) : (authors[i][0] == ('+')) ? authors[i].substr(2, authors[i].length - 2) : authors[i] })
-                    if (user != null) {
-                        tmp += '\n' + ((user.tg != '') ? `<a href="tg://user?id=${user.tg}">${authors[i]}</a>` : authors[i])
-                        list.push(user.tg)
-                    }
-                    else {
-                        tmp += '\n' + authors[i]
-                    }
-                }
-                for (let i = 0; i < list.length; i++) {
-                    user = await User.findOne({ tg: list[i] })
-                    status.send = await check(data, user, str + tmp)
-                    if (status.send.status) {
-                        status.to += 1
-                    }
-                    stat.push({ user: user.name, send: status.send })
-                }
-                arr.push((list.length > 0) ? stat : { message: "Ни одного пользователя нет в справочнике" })
-            }
-            else {
-                arr.push({ message: "Неконтрольное поручение" })
-            }
-        }
-        status.ctrl = ctrl
-        send = await Send.create({ ...arr })
-        status.send = send._id
-        await Status.create(status)
+        const result = await insertResAndSend(data.reslist, status, str)
+        status.send = result.send
+        status.send_id = result.send_id
+        status.res_id = result.res_id
+        await insertRc("In", data.rc)
     }
     else {
-        //{title, url, type, from, author, status, text}
-        if (info == null || !info.super) { //Проверка на Марину            
-            str += `<i>ввел(а) отчет:</i>\n================\nСтатус: <i>${data.status}</i>\n================\n`
-            user = await User.findOne({ name: data.author })
-            status.send = await check(data, user, str)
-            if (status.send.status) {
-                status.to = 1
+        //{title, url, type, from, author, status, text}        
+        const resolutionAuthor = (await fetchPost({ id: data.reply }, '/api/esed/resolution/author')).response
+        const authorInfo = (await fetchPost({
+            model: "Esed_User",
+            method: "findOne",
+            data: {
+                name: resolutionAuthor
             }
-            send = await Send.create(status.send)
-            status.send = send._id
-            await Status.create(status)
-        }
-    }
-}
-
-function visaSign() {
-
-}
-
-function sendVisaSign() {
-
-}
-
-function resolutiion() {
-
-}
-
-function reply() {
-
-}
-
-async function check(data, info, str) {
-    let reg = new RegExp(/.*ознакомлен.*/i)
-    if (info != null) {
-        if (info.tg == '') {
-            return { status: false, message: 'У пользователя не задан Telegram ID' }
-        }
-        if (data.from == info.tg) {
-            return { status: false, message: 'Отправка самому себе' }
-        }
-        if (data.type == 'answer') {
-            if (info.super) {
-                return await sendMessage((!process.env.NODE_ENV) ? "debug" : info.tg, (data.text != undefined) ? str += data.text : str += 'Введен пустой отчет!')
+        }, '/api/database/mongodb')).response
+        if (authorInfo) {
+            let reg = new RegExp(/.*ознакомлен.*/i)
+            //Надоедалка
+            let checkText = false
+            if (data.text == undefined || reg.test(data.text.substring(0, 10).toLowerCase())) {
+                if (authorInfo.super) {
+                    str += '<i>ввел(а) пустой отчёт</i>'
+                    checkText = true
+                }
             }
             else {
-                if (data.text != undefined && !reg.test(data.text.substring(0, 10).toLowerCase())) {
-                    return await sendMessage((!process.env.NODE_ENV) ? "debug" : info.tg, str += data.text)
-                }
-                else {
-                    return { status: false, message: 'Ознакомление' }
+                str += `<i>ввел(а) отчет:</i>\n================\nСтатус: <i>${data.status}</i>\n================\n${(data.text) ? data.text : ''}`
+                checkText = true
+            }
+            if (checkText) {
+                const authorSend = await sendAndInsert("esed-prod", authorInfo.tg, resolutionAuthor, str)
+                status.send += authorSend.send
+                status.send_id.push(`ObjectId=${authorSend.id}`)
+            }
+        }
+        await insertRc("In", data.rc)
+    }
+    console.log(status)
+    await fetchPost({
+        model: "Request",
+        method: "create",
+        data: status
+    }, '/api/database/mongodb')
+    // await insertRc(data.rc, rcInfo)
+}
+
+async function insertRc(type, rc) {
+    let data = { rc }
+    if (type == 'In') {
+        const signer = (await fetchPost({
+            id: rc
+        }, '/api/esed/rc/signer')).response
+        console.log('signer', signer)
+        data.sign = (signer) ? signer : "Внешний источник"
+        data.org = (signer)
+            ? (await fetchPost({
+                name: signer
+            }, '/api/esed/organization')).response
+            : (await fetchPost({
+                id: rc
+            }, '/api/esed/rc/corresp')).response
+    }
+    else {
+        data.author = (await fetchPost({ id: rc }, '/api/esed/prj/author')).response
+        data.dept = (await fetchPost({
+            name: data.author
+        }, '/api/esed/department')).response
+        data.org = (await fetchPost({
+            name: data.author
+        }, '/api/esed/organization')).response
+    }
+    await fetchPost({
+        model: `Esed_Rc_${type}`,
+        method: "existsAndCreate",
+        filter: {
+            rc
+        },
+        data
+    }, '/api/database/mongodb')
+}
+
+async function insertResAndSend(res, status, str) {
+    let send = 0
+    let res_id = []
+    let send_id = []
+    let text
+    for (let i = 0; i < res.length; i++) {
+        const resId = (await fetchPost({
+            model: "Esed_Res",
+            method: "create",
+            data: {
+                control: res[i].control,
+                author: status.from,
+                org: status.org,
+                dept: status.dept
+            }
+        }, '/api/database/mongodb')).response._id
+        res_id.push(`ObjectId=${resId}`)
+        if (res[i].control) {
+            text = `${str}\nПоручение: <i>${res[i].title}</i>\n================\nСрок: <i>${res[i].date}</i>\n================`
+            const authors = res[i].list.split(',')
+            for (let j = 0; j < authors.length; j++) {
+                const authorInfo = (await fetchPost({
+                    model: "Esed_User",
+                    method: "findOne",
+                    data: {
+                        name: (authors[j][0] == ('(')) ? authors[j].substr(7, authors[j].length - 7) : (authors[j][0] == ('+')) ? authors[j].substr(2, authors[j].length - 2) : authors[j]
+                    }
+                }, '/api/database/mongodb')).response
+                text += (authorInfo) ? `\n<a href="tg://user?id=${authorInfo.tg}">${authors[j]}</a>` : `\n${authors[j]}`
+            }
+            for (let j = 0; j < authors.length; j++) {
+                const authorInfo = (await fetchPost({
+                    model: "Esed_User",
+                    method: "findOne",
+                    data: {
+                        name: (authors[j][0] == ('(')) ? authors[j].substr(7, authors[j].length - 7) : (authors[j][0] == ('+')) ? authors[j].substr(2, authors[j].length - 2) : authors[j]
+                    }
+                }, '/api/database/mongodb')).response
+                if (authorInfo) {
+                    const sended = await sendAndInsert("esed-prod", authorInfo.tg, (authors[j][0] == ('(')) ? authors[j].substr(7, authors[j].length - 7) : (authors[j][0] == ('+')) ? authors[j].substr(2, authors[j].length - 2) : authors[j], text)
+                    send += sended.send
+                    send_id.push(`ObjectId=${sended.id}`)
                 }
             }
         }
-        else {
-            return await sendMessage((!process.env.NODE_ENV) ? "debug" : info.tg, str)
-        }
     }
-    else {
-        return { status: false, message: 'Пользователя нет в справочнике' }
+    return {
+        send,
+        send_id,
+        res_id
+    }
+}
+
+async function getTgAndMsgAndSend(list, str) {
+    let send = 0
+    let send_id = []
+    let text = str
+    return Promise.all(
+        list.map(async (name) => {
+            const authorInfo = (await fetchPost({
+                model: "Esed_User",
+                method: "findOne",
+                data: {
+                    name
+                }
+            }, '/api/database/mongodb')).response
+            text += (authorInfo) ? (`\n<a href="tg://user?id=${authorInfo.tg}">${name}</a>`) : ('\n' + name)
+        })
+    ).then(() => {
+        return Promise.all(
+            list.map(async (name) => {
+                const authorInfo = (await fetchPost({
+                    model: "Esed_User",
+                    method: "findOne",
+                    data: {
+                        name
+                    }
+                }, '/api/database/mongodb')).response
+                if (authorInfo) {
+                    const sendStatus = await sendAndInsert("esed-prod", authorInfo.tg, name, text)
+                    console.log(sendStatus)
+                    send += sendStatus.send
+                    send_id.push(`ObjectId=${sendStatus.id}`)
+                }
+            })
+        ).then(() => {
+            return {
+                send,
+                send_id,
+            }
+        })
+    })
+}
+
+async function getTgFromSqlAndSend(authors, text) {
+    let send = 0
+    let send_id = []
+    return Promise.all(
+        authors.map(async (obj) => {
+            const authorInfo = (await fetchPost({
+                model: "Esed_User",
+                method: "findOne",
+                data: {
+                    name: obj['SURNAME_PATRON']
+                }
+            }, '/api/database/mongodb')).response
+            if (authorInfo) {
+                const sendStatus = await sendAndInsert("esed-prod", authorInfo.tg, obj['SURNAME_PATRON'], text)
+                send += sendStatus.send
+                send_id.push(`ObjectId=${sendStatus.id}`)
+            }
+        })
+    ).then(() => {
+        return {
+            send,
+            send_id
+        }
+    })
+}
+
+async function sendAndInsert(bot, chat_id, user, text) {
+    const authorSend = (await fetchPost({
+        bot,
+        message: {
+            parse_mode: "html",
+            chat_id,
+            text
+        }
+    }, '/api/tg/sendMessage')).response
+    const sendId = (await fetchPost({
+        model: "Esed_Send",
+        method: "create",
+        data: {
+            status: authorSend.ok,
+            user,
+            message: (!authorSend.ok) ? authorSend.description : "Сообщение успешно отправлено"
+        }
+    }, '/api/database/mongodb')).response._id
+    return {
+        send: (authorSend.ok) ? 1 : 0,
+        id: sendId
     }
 }

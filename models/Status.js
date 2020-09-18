@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const { DateTime } = require('mssql')
 
 const schema = new Schema({
     type: { type: String },
@@ -8,8 +9,12 @@ const schema = new Schema({
     res: { type: Number, default: 0 },
     ctrl: { type: Number, default: 0 },
     send: { type: Schema.Types.Mixed },
-    date: { type: Date, default: (new Date(Date.now() - (-32400000))) },
+    date: { type: Scheme.Types.DateTime, default: (new Date(Date.now() - (-32400000))) },
     input: { type: Schema.Types.ObjectId, ref: 'Input' }
 }, { versionKey: false })
 
-module.exports = model('Status', schema)
+try {
+    module.exports = model('Status')
+} catch (err) {
+    module.exports = model('Status', schema)
+}

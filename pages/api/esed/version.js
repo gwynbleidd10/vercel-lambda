@@ -1,11 +1,41 @@
+const { cors } = require('../../../utils/cors')
+
+const { fetchPost } = require('../../../utils/fetchPost')
+
 module.exports = async (req, res) => {
-    res.json({ version: process.env.SCRIPT_VERSION })
+    await cors(req, res)
+    res.json({
+        version: (await fetchPost({
+            model: "Config",
+            method: "findOne",
+            key: "EsedVersion"
+        }, '/api/database/mongodb')).response.value
+    })
     if (req.query.name) {
-        const user = await User.findOne({ tg: req.query.tg })
-        if (user) {
-            if (!user.name || (user.name != req.query.name)) {
-                await User.updateOne({ tg: req.query.tg }, { name: req.query.name })
+        const user = (await fetchPost({
+            model: "Esed_User",
+            method: "findOne",
+            data: {
+                tg: req.query.tg
             }
+        }, '/api/database/mongodb')).response
+        if (user) {
+            await fetchPost({
+                model: "Esed_User",
+                method: "updateOne",
+                filter: {
+                    tg: req.query.tg
+                },
+                data: {
+                    name: req.query.name,
+                    dept: (await fetchPost({
+                        name: req.query.name
+                    }, '/api/esed/department')).response,
+                    org: (await fetchPost({
+                        name: req.query.name
+                    }, '/api/esed/organization')).response,
+                }
+            }, '/api/database/mongodb')
         }
     }
 }

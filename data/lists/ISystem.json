@@ -614,12 +614,12 @@
             "requestsmin": "1000",
             "requestsmax": "10000",
             "test": {
-                "code": "140002",
+                "code": "140102",
                 "cert": "5c2a640028ac14974ffaab85be086518",
                 "date": "31.08.2021"
             },
             "prod": {
-                "code": "140002",
+                "code": "140102",
                 "cert": "5c2a640028ac14974ffaab85be086518",
                 "date": "31.08.2021"
             }

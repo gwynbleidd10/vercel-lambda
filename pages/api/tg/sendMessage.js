@@ -1,10 +1,10 @@
+const { fetchPost } = require('../../../utils/fetchPost')
+/*
+bot: String,
+messsage: Object
+*/
 
 module.exports = async (req, res) => {
-    let message = req.body.message
-    let token = '1008172330:AAFR-qVaUe2S1_mcY8x1QxXY6i-AnUGe6DQ'
-    let url = `https://api.telegram.org/bot${token}/sendMessage`
-
-    console.log(message)
     if (req.method == 'GET') {
         res.json({
             status: 200,
@@ -12,17 +12,18 @@ module.exports = async (req, res) => {
         })
     }
     else {
-        await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(message)
-        })
+        let post = (await fetchPost({
+            db: "workapi",
+            model: "Bot",
+            method: "findOne",
+            data: {
+                name: req.body.bot
+            }
+        }, '/api/database/mongodb')).response
+        const result = await fetchPost(req.body.message, `/bot${post.token}/sendMessage`, 'https://api.telegram.org')
         res.json({
             status: 200,
-            message: "OK",
+            response: result,
         })
     }
 }

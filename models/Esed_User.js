@@ -2,9 +2,14 @@ const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
     name: { type: String, default: '' },
-    tg: { type: String, unique: true },
     dept: { type: String, default: null },
+    org: { type: String, default: null },
+    tg: { type: String, unique: true },
     super: { type: Boolean, default: false }
 }, { versionKey: false })
 
-module.exports = model('User', schema)
+try {
+    module.exports = model('Esed_User')
+} catch (err) {
+    module.exports = model('Esed_User', schema)
+}

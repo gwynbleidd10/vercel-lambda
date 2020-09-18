@@ -2,4 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const schema = new Schema({}, { versionKey: false, strict: false })
 
-module.exports = model('Input', schema)
+try {
+    module.exports = model('Esed_Input')
+} catch (err) {
+    module.exports = model('Esed_Input', schema)
+}
