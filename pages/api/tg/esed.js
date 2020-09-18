@@ -23,8 +23,7 @@ module.exports = async (req, res) => {
             "method": "sendMessage",
             "chat_id": req.body.message.chat.id,
             "reply_to_message_id": req.body.message.message_id,
-            "text": "Тест!"
-            //user
+            "text": info(req.body.message.chat.id)
         })
         // res.json(req.body)
         // bot.onText('message', (msg) => {
