@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
         res.json({
             "method": "sendMessage",
             "parse_mode": "html",
+            "disable_web_page_preview" : true,
             "chat_id": req.body.message.chat.id,
             "reply_to_message_id": req.body.message.message_id,
             "text": info(req.body.message.chat.id)
