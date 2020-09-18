@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
         console.log(req.body)
         res.json({
             "method": "sendMessage",
+            "parse_mode": "html",
             "chat_id": req.body.message.chat.id,
             "reply_to_message_id": req.body.message.message_id,
             "text": info(req.body.message.chat.id)
