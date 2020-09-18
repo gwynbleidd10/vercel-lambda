@@ -13,17 +13,9 @@
 module.exports = async (req, res) => {
     console.log(req)
     if (req.method == 'GET') {
-        const r = await fetch('https://api.telegram.org/bot1008172330:AAFR-qVaUe2S1_mcY8x1QxXY6i-AnUGe6DQ/sendMessage', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
         res.json({
             status: 200,
-            message: await r,
+            message: "GET",
         })
     }
     else {
