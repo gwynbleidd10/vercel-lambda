@@ -3,6 +3,7 @@
 // // const bot = new TelegramBot(process.env.BOT_TEST, { webHook: true })
 
 const { cors } = require('../../../utils/cors')
+const { fetchPost } = require('../../../utils/fetchPost')
 
 // let data = {
 //     "chat_id": "337277275",
@@ -18,21 +19,30 @@ module.exports = async (req, res) => {
         })
     }
     else {
-        console.log(req.body)
-        res.json({
-            "method": "sendMessage",
-            "parse_mode": "html",
-            "disable_web_page_preview" : true,
-            "chat_id": req.body.message.chat.id,
-            "reply_to_message_id": req.body.message.message_id,
-            "text": info(req.body.message.chat.id)
-        })
-        // res.json(req.body)
-        // bot.onText('message', (msg) => {
-        //     //sendMessage(msg.from.id, start(msg.from.id))
-        //     //checkId(msg.from.id)
-        //     bot.sendMessage(req.body.message.chat.id, msg)
+        // res.json({
+        //     "method": "sendMessage",
+        //     "parse_mode": "html",
+        //     "disable_web_page_preview": true,
+        //     "chat_id": req.body.message.chat.id,
+        //     "reply_to_message_id": req.body.message.message_id,
+        //     "text": info(req.body.message.chat.id)
         // })
+
+        // const result = (await fetchPost({
+        //     bot: "esed-prod",
+        //     message: {
+        //         parse_mode: "html",
+        //         disable_web_page_preview: true,
+        //         chat_id: req.body.message.chat.id,
+        //         text: info(req.body.message.chat.id)
+        //     }
+        // }, '/api/tg/sendMessage')).response
+        // res.json(result)
+
+        const command = /^/i
+        if (req.body.message.text){
+            
+        }
     }
 }
 
